@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>South Coast Business Hub | Local Directory</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0F172A; /* Deep Navy from logo */
+            --secondary: #0284C7; /* Ocean Blue from logo */
+            --accent: #F59E0B; /* Sun Yellow from logo */
+            --bg-color: #F8FAFC; 
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --whatsapp: #25D366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Top Navigation */
+        .top-bar {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-area i {
+            color: var(--accent);
+        }
+
+        .contact-badge {
+            background-color: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-badge i {
+            color: var(--whatsapp);
+        }
+
+        /* Hero & Search Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #1E3A8A 100%);
+            padding: 4rem 2rem 5rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .search-container input {
+            flex: 1;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            color: var(--text-main);
+        }
+
+        .search-container button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-container button:hover {
+            background-color: #0369A1;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            justify-content: center;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cat-pill {
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            background: var(--bg-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .cat-pill:hover, .cat-pill.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1400px;
+            margin: -2rem auto 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Directory List */
+        .directory-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        /* Business Cards */
+        .business-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .business-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: #CBD5E1;
+        }
+
+        .biz-info {
+            flex: 1;
+        }
+
+        .biz-info h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .biz-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .biz-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .biz-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .biz-contact {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            min-width: 200px;
+        }
+
+        .contact-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .contact-number i {
+            color: var(--secondary);
+        }
+
+        .whatsapp-btn {
+            background-color: var(--whatsapp);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1DA851;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding-top: 2.5rem;
+        }
+
+        .ad-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .ad-content {
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .ad-content h4 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .ad-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* AI Widget */
+        .ai-widget {
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .ai-widget h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #F8FAFC;
+        }
+
+        .ai-widget p {
+            font-size: 0.875rem;
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .ai-input:focus {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none; /* Hide ads on smaller screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .top-bar { flex-direction: column; gap: 1rem; text-align: center; }
+            .business-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .biz-contact {
+                text-align: left;
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .contact-number { justify-content: flex-start; }
+            .whatsapp-btn { width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="top-bar">
+        <div class="logo-area">
+            <i class="fa-solid fa-lighthouse"></i>
+            South Coast Business Hub
+        </div>
+        <div class="contact-badge">
+            <i class="fa-solid fa-phone"></i>
+            Contact Us: 068 912 4033
+        </div>
+    </nav>
+
+    <!-- Hero / Search Section -->
+    <header class="hero">
+        <h1>Discover Local Businesses</h1>
+        <p>The premium, verified directory for the South Coast, KZN. Find exactly what you need, faster.</p>
+        
+        <div class="search-container">
+            <input type="text" placeholder="Search for a business, service, or category...">
+            <button>Search</button>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <div class="category-nav">
+        <a href="#" class="cat-pill active">All Categories</a>
+        <a href="#" class="cat-pill">Accommodation</a>
+        <a href="#" class="cat-pill">Agriculture</a>
+        <a href="#" class="cat-pill">Automotive</a>
+        <a href="#" class="cat-pill">Building & Trade</a>
+        <a href="#" class="cat-pill">Health & Beauty</a>
+        <a href="#" class="cat-pill">IT & Web</a>
+        <a href="#" class="cat-pill">Restaurants</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <!-- Left Column: Directory List -->
+        <main class="directory-section">
+            
+            <!-- Section: Accommodation -->
+            <h2 class="section-title"><i class="fa-solid fa-bed"></i> Accommodation</h2>
+
+            <!-- Business Card 1 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Blue Hive Guest House</h3>
+                    <div class="biz-desc">Self-Catering & Pet Friendly. Quality, well-managed.</div>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> Palm Beach</span>
+                        <span><i class="fa-solid fa-user"></i> Contact: Nigel</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 069 994 9816
+                    </div>
+                    <a href="https://wa.me/27624735437" class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Business Card 2 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Little Creek Cabins</h3>
+                    <div class="biz-desc">4 Sleeper & 6 Sleeper self-catering cabins.</div>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> Palm Beach</span>
+                        <span><i class="fa-solid fa-user"></i> Contact: Anthea</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 063 485 2814
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Card 3 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Mzinmayi River Lodge</h3>
+                    <div class="biz-desc">Fully Licensed Casino & Conference facilities.</div>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> Hibberdene</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 039 399 3077
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Agriculture & Consulting -->
+            <h2 class="section-title" style="margin-top: 2rem;"><i class="fa-solid fa-leaf"></i> Agriculture & Consulting</h2>
+
+            <!-- Business Card 4 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Maclogika Consulting</h3>
+                    <div class="biz-desc">Banana & Macadamia Crops. 50 Years Experience.</div>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> South Coast, KZN</span>
+                        <span><i class="fa-solid fa-user"></i> Contact: Nigel</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 081 250 5652
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Automotive -->
+            <h2 class="section-title" style="margin-top: 2rem;"><i class="fa-solid fa-car"></i> Automotive</h2>
+
+            <!-- Business Card 5 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Clean & Shine Car Wash</h3>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> Shelly Beach</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 083 743 2200
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Card 6 -->
+            <div class="business-card">
+                <div class="biz-info">
+                    <h3>Quick & Easier Driver's License</h3>
+                    <div class="biz-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> South Coast, KZN</span>
+                    </div>
+                </div>
+                <div class="biz-contact">
+                    <div class="contact-number">
+                        <i class="fa-solid fa-phone"></i> 073 264 4223
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Right Column: Sidebar & Ads -->
+        <aside class="sidebar">
+            
+            <!-- Hub Promotion Card -->
+            <div class="ad-card">
+                <div class="ad-content" style="background: var(--primary); color: white;">
+                    <h4 style="color: white; margin-bottom: 0.5rem;">List Your Business</h4>
+                    <p style="color: #CBD5E1;">Join the South Coast Business Hub today. Get seen by thousands of locals and tourists.</p>
+                    <div style="font-size: 1.25rem; font-weight: 700; margin-top: 1rem;">
+                        Call: 068 912 4033
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Widget -->
+            <div class="ai-widget">
+                <h4><i class="fa-solid fa-robot" style="color: var(--accent);"></i> AI Education & Help</h4>
+                <p>Simple, honest answers about AI for small businesses. Powered by Grok.</p>
+                <input type="text" class="ai-input" placeholder="Ask anything...">
+            </div>
+
+            <!-- Premium Ad 2 -->
+            <div class="ad-card">
+                <div class="ad-content">
+                    <div style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;">
+                        <i class="fa-solid fa-house-chimney-window"></i>
+                    </div>
+                    <h4>Blue Hive Guesthouse</h4>
+                    <p>37 Jan van Riebeeck Dr.<br>Palm Beach</p>
+                    <a href="https://wa.me/27624735437" class="whatsapp-btn" style="width: 100%; margin-top: 0.5rem;">
+                        <i class="fa-brands fa-whatsapp"></i> 062 473 5437
+                    </a>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+</body>
+</html>
